@@ -130,10 +130,9 @@ function add_to_media($url){
 
 add_shortcode('opengraph_content', 'display_opengraph_content');
 function display_opengraph_content($atts){
-	 ['content'=>$name] = shortcode_atts( array(
+	 ['get'=>$name] = shortcode_atts( array(
 		'get' => null,
 	), $atts );
-
 	if($name && $content = get_post_meta(get_the_ID(), "og_source_$name", true)){
 	 return $content; 
 	}
