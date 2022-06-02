@@ -14,7 +14,8 @@
 
 // Your code starts here.
 require_once plugin_dir_path(__FILE__) . "includes/opengraph.php";
-
+require_once plugin_dir_path(__FILE__) . "includes/options_page.php";
+require_once plugin_dir_path(__FILE__) . "includes/acf_fields.php";
 define('URL_FIELD', 'og_source_url');
 define('REFRESH_FIELD', 'og_source_url');
 

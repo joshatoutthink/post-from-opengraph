@@ -95,7 +95,7 @@ class OpenGraph implements Iterator
 		$doc->loadHTML($HTML);
 
 		libxml_use_internal_errors($old_libxml_error);
-		error_log('here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
 		$tags = $doc->getElementsByTagName('meta');
 		if (!$tags || $tags->length === 0) {
 			return false;
