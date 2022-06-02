@@ -29,9 +29,6 @@ function pog_settings(){
 			<input type="hidden" name="page" value="post-from-og-setting">
 			<button class="is-primary button">Save</button>
 		</form>
-		<pre>
-		<?php echo print_r(get_option('og_supported_types', ['post'=>1]), true); ?>
-		</pre>
 		
 	</main>
 <?php }

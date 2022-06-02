@@ -9,7 +9,6 @@ foreach(get_option('og_supported_types',['post'=>1]) as $ptype=>$value){
 				);
 }
 
-error_log(print_r($locations, true));
 
 $res = acf_add_local_field_group(array(
 	'key' => 'group_62977bac07eb9',
