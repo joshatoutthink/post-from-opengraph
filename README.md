@@ -6,7 +6,7 @@
 
 2. Select the post types you would like to create posts from opengraph meta on the settings page
 
-https://YOUR-SITE/wp-admin/options-general.php?page=post-from-og-setting
+https://yourdomain.com/wp-admin/options-general.php?page=post-from-og-setting
 
 3. Create a post
 
