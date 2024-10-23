@@ -16,11 +16,12 @@
 require_once plugin_dir_path(__FILE__) . "includes/opengraph.php";
 require_once plugin_dir_path(__FILE__) . "includes/options_page.php";
 require_once plugin_dir_path(__FILE__) . "includes/acf_fields.php";
+
 define('URL_FIELD', 'og_source_url');
 define('REFRESH_FIELD', 'og_source_url');
 
 add_action('acf/save_post', 'add_post_content_from_opengraph'  );
-function add_post_content_from_opengraph($post_id ){
+function add_post_content_from_opengraph(int $post_id ){
 	error_log("new submission\n\n");
 
 	if ((wp_is_post_revision($post_id)) || (wp_is_post_autosave($post_id))) {
@@ -40,7 +41,7 @@ function add_post_content_from_opengraph($post_id ){
 	$html = wp_remote_get($url);
 	if(is_wp_error($html)){
 		error_log("html is a error");
-		error_log($html->get_error_code(). "\n ". $html->get_all_error_data($html->get_error_code()));
+		error_log($html->get_error_code(). "\n ". print_r($html->get_all_error_data($html->get_error_code()),true));
 		return;	
 	}
 
@@ -52,6 +53,7 @@ function add_post_content_from_opengraph($post_id ){
 	$updated_post = array(
 		'ID'           => $post_id,
 		'post_excerpt' => $opengraph->description,
+        'post_title'   => $opengraph->title,
 	);
 	wp_update_post( $updated_post );
 
