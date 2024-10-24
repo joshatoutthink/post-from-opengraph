@@ -167,7 +167,25 @@ class OpenGraph implements Iterator
 					}
 				}
 			}
+
 		}
+
+        $linkrels = $doc->getElementsByTagName("link");
+        foreach($linkrels as $link){
+            if($link->hasAttribute("rel") && $link->hasAttribute("href")) {
+                if(strpos($link->getAttribute("rel"), "icon") !== false){
+                    $iconurl = $link->getAttribute("href");
+                    if(str_starts_with( $iconurl, "http" )){
+                        $page->_values["icon"] = $iconurl;
+                    } elseif(str_starts_with($iconurl,"/")) {
+                        $domain = parse_url('http://' . str_replace(array('https://', 'http://'), '', $page->_values['url']), PHP_URL_HOST);
+                        $iconurl = "https://".$domain. $iconurl;
+                        $page->_values["icon"] = $iconurl;;
+                    }
+                    break;
+                }
+            }
+        }
 
 		//Based on modifications at https://github.com/bashofmann/opengraph/blob/master/src/OpenGraph/OpenGraph.php
 		if (!isset($page->_values['title'])) {
@@ -205,6 +223,8 @@ class OpenGraph implements Iterator
         }
 
 		if (empty($page->_values)) { return false; }
+
+
 
 		return $page;
 	}

@@ -10,6 +10,7 @@ class AdminError {
     }
 
     public static function error(string $message): void {
+        error_log($message);
         error_log(print_r("creating error:\n---\n$message", true));
         set_transient(self::key, $message);
     }

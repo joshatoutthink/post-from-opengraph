@@ -3,7 +3,7 @@
 namespace OpengraphPost;
 
 add_action('admin_menu', function () {
-    add_options_page('Post From OG Settings', 'Post From Open Graph Settings', 'manage_options', 'post-from-og-setting', __NAMESPACE__ . '::pog_settings');
+    add_options_page('Post From OG Settings', 'Post From Open Graph Settings', 'manage_options', 'post-from-og-setting', __NAMESPACE__ . '\pog_settings');
 });
 
 
