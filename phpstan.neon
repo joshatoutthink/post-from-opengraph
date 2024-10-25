@@ -5,4 +5,5 @@ parameters:
 	paths:
 		- includes
 		- post-from-opengragh.php
+		- updatePlugin
 

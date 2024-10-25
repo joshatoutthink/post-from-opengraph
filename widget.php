@@ -2,16 +2,18 @@
 
 // Hook to add the dashboard widget
 
-use function OpengraphPost\PostFromOpenGraph;
-use function OpengraphPost\supported_post_types;
+namespace OpengraphPost;
 
-add_action('wp_dashboard_setup', 'custom_dashboard_widget');
+// use function OpengraphPost\PostFromOpenGraph;
+// use function OpengraphPost\supported_post_types;
+
+add_action('wp_dashboard_setup', __NAMESPACE__.'\custom_dashboard_widget');
 
 function custom_dashboard_widget() {
     wp_add_dashboard_widget(
         'og_quick_link',    // Widget slug
         'Add a link',         // Title
-        'og_new_link_widget_form'  // Display callback
+       __NAMESPACE__.'\og_new_link_widget_form'  // Display callback
     );
 }
 

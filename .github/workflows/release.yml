@@ -1,0 +1,26 @@
+name: Generate Installable Plugin and Upload zip as Release Asset
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Node Setup
+        uses: actions/setup-node@v2
+      - name: Build Project
+        run: |
+          mkdir -p build
+      - name: Zip Plugin
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -X -r build/post-from-opengraph.zip . -x *.git* node_modules .* "*/\.*" CODE_OF_CONDUCT.md CONTRIBUTING.md ISSUE_TEMPLATE.md PULL_REQUEST_TEMPLATE.md *.dist 
+      - name: Upload Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            build/post-from-opengraph.zip

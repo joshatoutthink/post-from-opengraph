@@ -12,10 +12,12 @@
  *
  * @package         Post_From_Opengraph
  */
-
-use OpengraphPost\AdminError;
+namespace OpengraphPost;
+define("OpengraphPost_VERSION","0.2.0");
+define("OpengraphPost_FILE",__FILE__);
 
 // Your code starts here.
+require_once plugin_dir_path(__FILE__) . "updatePlugin/init.php";
 require_once plugin_dir_path(__FILE__) . "includes/opengraph.php";
 require_once plugin_dir_path(__FILE__) . "includes/options_page.php";
 require_once plugin_dir_path(__FILE__) . "includes/acf_fields.php";
@@ -24,14 +26,9 @@ require_once plugin_dir_path(__FILE__) . "includes/postfromopengraph.php";
 
 require_once plugin_dir_path(__FILE__) . "widget.php";
 
-
-use function OpengraphPost\PostFromOpenGraph;
-use function OpengraphPost\supported_post_types;
-
 define('URL_FIELD', 'og_source_url');
 define('REFRESH_FIELD', 'refresh_content');
-
-add_action('acf/save_post', 'add_post_content_from_opengraph');
+add_action('acf/save_post', __NAMESPACE__.'\add_post_content_from_opengraph');
 function add_post_content_from_opengraph(int $post_id): bool {
 
     if ((wp_is_post_revision($post_id)) || (wp_is_post_autosave($post_id))) {
@@ -51,7 +48,7 @@ function add_post_content_from_opengraph(int $post_id): bool {
     return true;
 }
 
-add_shortcode('opengraph_content', 'display_opengraph_content');
+add_shortcode('opengraph_content', __NAMESPACE__.'\display_opengraph_content');
 function display_opengraph_content($atts) {
     ['get' => $name] = shortcode_atts(array(
         'get' => null,
@@ -63,7 +60,7 @@ function display_opengraph_content($atts) {
 
 $ptypes = supported_post_types();
 foreach (array_keys($ptypes) as $ptype) {
-    add_action("rest_after_insert_$ptype", "on_rest_after_insert", 10, 2);
+    add_action("rest_after_insert_$ptype", __NAMESPACE__."\on_rest_after_insert", 10, 2);
 }
 
 function on_rest_after_insert($post, $request) {

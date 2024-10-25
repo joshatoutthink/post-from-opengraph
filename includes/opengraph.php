@@ -1,4 +1,5 @@
 <?php
+namespace OpengraphPost;
 /*
   Copyright 2010 Scott MacVicar
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +14,7 @@
 	Original can be found at https://github.com/scottmac/opengraph/blob/master/OpenGraph.php
 */
 
-class OpenGraph implements Iterator
+class OpenGraph implements \Iterator
 {
   /**
    * There are base schema's based on type, this is just
@@ -91,7 +92,7 @@ class OpenGraph implements Iterator
 	static private function _parse($HTML) {
 		$old_libxml_error = libxml_use_internal_errors(true);
 
-		$doc = new DOMDocument();
+		$doc = new \DOMDocument();
 		$doc->loadHTML($HTML);
 
 		libxml_use_internal_errors($old_libxml_error);
@@ -200,7 +201,7 @@ class OpenGraph implements Iterator
 
         //Fallback to use image_src if ogp::image isn't set.
         if (!isset($page->_values['image'])) {
-            $domxpath = new DOMXPath($doc);
+            $domxpath = new \DOMXPath($doc);
             $elements = $domxpath->query("//link[@rel='image_src']");
 
             if ($elements->length > 0) {

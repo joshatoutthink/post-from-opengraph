@@ -2,7 +2,6 @@
 
 namespace OpengraphPost;
 
-use OpenGraph;
 use WP_Error;
 
 function PostFromOpenGraph(string $url, ?int $post_id = null, ?string $type = "post"): bool|int {
@@ -21,7 +20,7 @@ function PostFromOpenGraph(string $url, ?int $post_id = null, ?string $type = "p
         return false;
     }
 
-    remove_action('save_post', 'add_post_content_from_opengraph');
+    remove_action('save_post', __NAMESPACE__.'\add_post_content_from_opengraph');
 
     $updated_post = array(
         'post_excerpt' => $opengraph->description,
