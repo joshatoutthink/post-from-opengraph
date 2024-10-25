@@ -29,7 +29,7 @@ use function OpengraphPost\PostFromOpenGraph;
 use function OpengraphPost\supported_post_types;
 
 define('URL_FIELD', 'og_source_url');
-define('REFRESH_FIELD', 'og_source_url');
+define('REFRESH_FIELD', 'refresh_content');
 
 add_action('acf/save_post', 'add_post_content_from_opengraph');
 function add_post_content_from_opengraph(int $post_id): bool {

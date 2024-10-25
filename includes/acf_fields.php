@@ -68,5 +68,4 @@ $res = acf_add_local_field_group(array(
 	'description' => '',
 	'show_in_rest' => 1,
 ));
-error_log($res);
 endif;		

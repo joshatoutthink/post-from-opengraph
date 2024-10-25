@@ -41,6 +41,5 @@ function pog_settings() {
 /** @return array<string, int>  */
 function supported_post_types(): array {
     $types = get_option("og_supported_types", ["post" => 1]);
-    error_log(print_r($types,true));
     return $types;
 }

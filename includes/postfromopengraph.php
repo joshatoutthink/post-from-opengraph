@@ -6,9 +6,8 @@ use OpenGraph;
 use WP_Error;
 
 function PostFromOpenGraph(string $url, ?int $post_id = null, ?string $type = "post"): bool|int {
-
+    error_log("Running ". __FUNCTION__);
     $html = fetch_content_with_browser_headers($url);
-    error_log(print_r($html, true));
     if (is_wp_error($html)) {
         error_log("html is a error");
         error_log($html->get_error_code() . "\n " . print_r($html->get_all_error_data($html->get_error_code()), true));
@@ -58,6 +57,7 @@ function PostFromOpenGraph(string $url, ?int $post_id = null, ?string $type = "p
     }
 
     update_field('refresh_content', false, $post_id);
+    update_field(URL_FIELD, $url, $post_id);
 
     return $post_id;
 }
