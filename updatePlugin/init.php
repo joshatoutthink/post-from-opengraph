@@ -1,7 +1,7 @@
 <?php
 
 namespace OpengraphPost\updatePlugin;
-
+require_once "UpdatePlugin.php";
 //configure
 function newUpdater():UpdatePlugin {
     $config = new \stdClass;
