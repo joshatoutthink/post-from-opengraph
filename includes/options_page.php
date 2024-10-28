@@ -2,6 +2,8 @@
 
 namespace OpengraphPost;
 
+use OpengraphPost\updatePlugin\UpdatePlugin;
+
 add_action('admin_menu', function () {
     add_options_page('Post From OG Settings', 'Post From Open Graph Settings', 'manage_options', 'post-from-og-setting', __NAMESPACE__ . '\pog_settings');
 });
@@ -16,6 +18,10 @@ function pog_settings() {
             }
         }
         update_option('og_supported_types', $updated_settings);
+
+        if(isset($_POST['license'])){
+            update_option(UpdatePlugin::LICENSE_KEY, $_POST['license']);
+        }
     }
 ?>
     <header>
@@ -32,7 +38,12 @@ function pog_settings() {
                 <?php endforeach; ?>
             </fieldset>
             <input type="hidden" name="page" value="post-from-og-setting">
+
+            <label for="license" >License</label>
+            <input type="password" name="license" id="og-license"/>
+
             <button class="is-primary button">Save</button>
+
         </form>
 
     </main>
