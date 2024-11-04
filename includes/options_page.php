@@ -40,7 +40,7 @@ function pog_settings() {
             <input type="hidden" name="page" value="post-from-og-setting">
 
             <label for="license" >License</label>
-            <input type="password" name="license" id="og-license"/>
+            <input type="password" name="license" id="og-license" value="<?= get_option(UpdatePlugin::LICENSE_KEY, ""); ?> " />
 
             <button class="is-primary button">Save</button>
 
