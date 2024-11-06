@@ -14,12 +14,17 @@ namespace OpengraphPost;
 	Original can be found at https://github.com/scottmac/opengraph/blob/master/OpenGraph.php
 */
 
+/**
+ * @template T
+ * @implements \Iterator<string> 
+ **/
 class OpenGraph implements \Iterator
 {
   /**
    * There are base schema's based on type, this is just
    * a map so that the schema can be obtained
    *
+   * @var array<string,array<string>>
    */
 	public static $TYPES = array(
 		'activity' => array('activity', 'sport'),
@@ -34,7 +39,7 @@ class OpenGraph implements \Iterator
 
   /**
    * Holds all the Open Graph values we've parsed from a page
-   *
+   * @var array<string,string>
    */
 	private $_values = array();
 
@@ -254,9 +259,9 @@ class OpenGraph implements \Iterator
   /**
    * Return all the keys found on the page
    *
-   * @return array
+   * @return array<string>
    */
-	public function keys() {
+	public function keys(): array {
 		return array_keys($this->_values);
 	}
 
@@ -290,10 +295,10 @@ class OpenGraph implements \Iterator
   /**
    * Iterator code
    */
-	private $_position = 0;
-	public function rewind() { reset($this->_values); $this->_position = 0; }
-	public function current() { return current($this->_values); }
-	public function key() { return key($this->_values); }
-	public function next() { next($this->_values); ++$this->_position; }
-	public function valid() { return $this->_position < sizeof($this->_values); }
+	private int $_position = 0;
+	public function rewind():void { reset($this->_values); $this->_position = 0; }
+	public function current():string { return current($this->_values); }
+	public function key():mixed { return key($this->_values); }
+	public function next():void { next($this->_values); ++$this->_position; }
+	public function valid():bool { return $this->_position < sizeof($this->_values); }
 }
