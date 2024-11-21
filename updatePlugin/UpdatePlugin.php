@@ -1,37 +1,46 @@
 <?php
+
 namespace OpengraphPost\updatePlugin;
 
 class UpdatePlugin {
     public function __construct(
         public object $config,
+        public string $cacheKey = "OTU_plugin_info",
     ) {
     }
     const LICENSE_KEY = "OTU_token";
 
-    public function transientUpdate(mixed $transient) {
+    public function transientUpdate(mixed $transient): mixed {
 
         if (empty($transient->checked)) {
             return $transient;
         }
 
-        $remote = wp_remote_get(
-            $this->config->infoUrl,
-            array(
-                'timeout' => 10,
-                'headers' => array(
-                    'Accept' => 'application/json',
-                    'sslverify' => false,
-                )
-            )
-        );
+        $remote = get_transient($this->cacheKey);
 
-        if (
-            is_wp_error($remote)
-            || 200 !== wp_remote_retrieve_response_code($remote)
-            || empty(wp_remote_retrieve_body($remote))
-        ) {
-            return $transient;
+        if ($remote === false) {
+            $remote = wp_remote_get(
+                $this->config->infoUrl,
+                array(
+                    'timeout' => 10,
+                    'headers' => array(
+                        'Accept' => 'application/json',
+                        'sslverify' => false,
+                    )
+                )
+            );
+
+            if (
+                is_wp_error($remote)
+                || 200 !== wp_remote_retrieve_response_code($remote)
+                || empty(wp_remote_retrieve_body($remote))
+            ) {
+                return $transient;
+            }
+
+            set_transient($this->cacheKey, $remote, DAY_IN_SECONDS);
         }
+
 
         $remote = json_decode(wp_remote_retrieve_body($remote));
         // your installed plugin version should be on the line below! You can obtain it dynamically of course 
@@ -67,27 +76,32 @@ class UpdatePlugin {
             return $res;
         }
 
-        // info.json is the file with the actual plugin information on your server
-        $remote = wp_remote_get(
-            $this->config->infoUrl,
-            array(
-                'sslverify' => false,
-                'timeout' => 10,
-                'headers' => array(
-                    'Accept' => 'application/json'
+        $remote = get_transient($this->cacheKey);
+        if ($remote === false) {
+            // info.json is the file with the actual plugin information on your server
+            $remote = wp_remote_get(
+                $this->config->infoUrl,
+                array(
+                    'sslverify' => false,
+                    'timeout' => 10,
+                    'headers' => array(
+                        'Accept' => 'application/json'
+                    )
                 )
-            )
-        );
+            );
 
+            // do nothing if we don't get the correct response from the server
+            if (
+                is_wp_error($remote)
+                || 200 !== wp_remote_retrieve_response_code($remote)
+                || empty(wp_remote_retrieve_body($remote))
+            ) {
+                return $res;
+            }
 
-        // do nothing if we don't get the correct response from the server
-        if (
-            is_wp_error($remote)
-            || 200 !== wp_remote_retrieve_response_code($remote)
-            || empty(wp_remote_retrieve_body($remote))
-        ) {
-            return $res;
+            set_transient($this->cacheKey, $remote, DAY_IN_SECONDS);
         }
+
 
         $remote = json_decode(wp_remote_retrieve_body($remote));
 
