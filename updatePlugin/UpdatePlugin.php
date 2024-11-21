@@ -5,7 +5,7 @@ namespace OpengraphPost\updatePlugin;
 class UpdatePlugin {
     public function __construct(
         public object $config,
-        public string $cacheKey = "OTU_plugin_info",
+        public ?string $cacheKey = "OTU_plugin_info",
     ) {
     }
     const LICENSE_KEY = "OTU_token";
