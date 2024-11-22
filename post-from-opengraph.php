@@ -8,12 +8,12 @@
  * Author URI:      YOUR SITE HERE
  * Text Domain:     post-from-opengraph
  * Domain Path:     /languages
- * Version:         0.2.3
+ * Version:         0.2.5
  *
  * @package         Post_From_Opengraph
  */
 namespace OpengraphPost;
-define("OpengraphPost_VERSION","0.2.3");
+define("OpengraphPost_VERSION","0.2.5");
 define("OpengraphPost_FILE",__FILE__);
 
 // Your code starts here.
