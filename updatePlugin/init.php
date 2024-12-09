@@ -14,5 +14,5 @@ function newUpdater():UpdatePlugin {
 
 // use
 add_filter('plugins_api', fn($res, $action, $args) => newUpdater()->pluginInfo($res, $action, $args), 10, 3);
-add_filter('site_transient_update_plugins', fn($transient) => newUpdater()->transientUpdate($transient), 10, 3);
+add_filter('site_transient_update_plugins', fn($transient) => newUpdater()->transientUpdate($transient), 10, 1);
 add_filter('http_request_args', fn($args, $url) => newUpdater()->modifyRequests($args, $url), 999, 2);
